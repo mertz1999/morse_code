@@ -17,7 +17,18 @@ using namespace little_endian_io;
 
 int main(int argc, const char* argv[])
 {
-	ofstream f("example.wav", ios::binary);
+	string infilename;
+	string outfilename;
+	if(argc > 1)
+		infilename = argv[1];
+	else
+		infilename = "code.txt";
+	if(argc > 2)
+		outfilename = argv[2];
+	else
+		outfilename = "example.wav";
+	
+	ofstream f(outfilename, ios::out|ios::binary);
 
 	// Write the file headers
 	f << "RIFF----WAVEfmt ";     // (chunk size to be filled in later)
@@ -43,7 +54,7 @@ int main(int argc, const char* argv[])
 
 	fstream code;
 	string scode;
-	code.open("code.txt");
+	code.open(infilename, ios::in);
 	getline(code,scode);
 	code.close();
 	for (int j = 0; j < scode.size(); j++) {
