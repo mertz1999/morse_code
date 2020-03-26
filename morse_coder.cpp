@@ -84,7 +84,7 @@ int main(int argc, const char* argv[]) {
 		coded += " ";
 	}
 
-	cout << coded;
+	cout << coded << endl;
 	//write coded to a file 
 	text.open("code.txt");
 	text << coded;
