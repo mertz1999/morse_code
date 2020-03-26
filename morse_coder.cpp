@@ -73,16 +73,16 @@ int main(int argc, const char* argv[]) {
 	cout << stext << endl;
 
 	// convert string to upper case
-	for_each(stext.begin(), stext.end(), [](char & c) {
+	for(auto & c: stext)
 		c = toupper(c);
-	});
+
 	cout << stext << endl;
 
 	//coder
 	string coded = "";
 	string temp;
-	for (int i = 0; i < stext.size();i++) {
-		temp = stext[i];
+	for (auto & k : stext) {
+		temp = k;
 		coded += coder.find(temp)->second;
 		coded += " ";
 	}
