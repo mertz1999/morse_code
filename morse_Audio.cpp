@@ -15,7 +15,7 @@ namespace little_endian_io{
 }
 using namespace little_endian_io;
 
-int main()
+int main(int argc, const char* argv[])
 {
 	ofstream f("example.wav", ios::binary);
 
@@ -112,6 +112,5 @@ int main()
 	// Fix the file header to contain the proper RIFF chunk size, which is (file size - 8) bytes
 	f.seekp(0 + 4);
 	write_word(f, file_length - 8, 4);
-	_getwch();
 	return 0;
 }

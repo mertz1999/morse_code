@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-int main1() {
+int main(int argc, const char* argv[]) {
 	fstream text;
 	//define morse codes standard
 	map<string, string> coder;
@@ -83,6 +83,5 @@ int main1() {
 	text << coded;
 	text.close();
 	
-	_getwch();
 	return 0;
 }
