@@ -65,6 +65,9 @@ int main(int argc, const char* argv[]) {
 	//read text from input file
 	string stext;
 	text.open(infilename);
+	//check if file openes successfully
+	if(!text)
+		return -1;
 	getline(text, stext);
 	text.close();
 	cout << stext << endl;
