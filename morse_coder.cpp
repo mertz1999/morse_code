@@ -70,8 +70,8 @@ int main(int argc, const char* argv[]) {
 	cout << stext << endl;
 
 	// convert string to upper case
-	std::for_each(stext.begin(), stext.end(), [](char & c) {
-		c = ::toupper(c);
+	for_each(stext.begin(), stext.end(), [](char & c) {
+		c = toupper(c);
 	});
 	cout << stext << endl;
 
