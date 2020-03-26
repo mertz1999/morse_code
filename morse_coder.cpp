@@ -55,9 +55,16 @@ int main(int argc, const char* argv[]) {
 		{ " ","   " },
 	};
 
-	//read text from text.txt file
+	//get filename from shell to read text from
+	string infilename;
+	if(argc > 1)
+		infilename = argv[1];
+	else
+		infilename = "text.txt";
+
+	//read text from input file
 	string stext;
-	text.open("text.txt");
+	text.open(infilename);
 	getline(text, stext);
 	text.close();
 	cout << stext << endl;
