@@ -62,6 +62,14 @@ int main(int argc, const char* argv[]) {
 	else
 		infilename = "text.txt";
 
+	//get filename from shell to write code to
+	string outfilename;
+	if(argc > 2)
+		outfilename = argv[2];
+	else
+		outfilename = "code.txt";
+
+
 	//read text from input file
 	string stext;
 	text.open(infilename);
@@ -88,8 +96,9 @@ int main(int argc, const char* argv[]) {
 	}
 
 	cout << coded << endl;
+	
 	//write coded to a file 
-	text.open("code.txt");
+	text.open(outfilename, ios::out);
 	text << coded;
 	text.close();
 	
