@@ -55,6 +55,11 @@ int main(int argc, const char* argv[])
 	fstream code;
 	string scode;
 	code.open(infilename, ios::in);
+
+	//check if file opens successfully
+	if(!code)
+		return -1;
+
 	getline(code,scode);
 	code.close();
 	for (int j = 0; j < scode.size(); j++) {
