@@ -15,9 +15,20 @@ namespace little_endian_io{
 }
 using namespace little_endian_io;
 
-int main()
+int main(int argc, const char* argv[])
 {
-	ofstream f("example.wav", ios::binary);
+	string infilename;
+	string outfilename;
+	if(argc > 1)
+		infilename = argv[1];
+	else
+		infilename = "code.txt";
+	if(argc > 2)
+		outfilename = argv[2];
+	else
+		outfilename = "example.wav";
+	
+	ofstream f(outfilename, ios::out|ios::binary);
 
 	// Write the file headers
 	f << "RIFF----WAVEfmt ";     // (chunk size to be filled in later)
@@ -43,7 +54,12 @@ int main()
 
 	fstream code;
 	string scode;
-	code.open("code.txt");
+	code.open(infilename, ios::in);
+
+	//check if file opens successfully
+	if(!code)
+		return -1;
+
 	getline(code,scode);
 	code.close();
 	for (int j = 0; j < scode.size(); j++) {
@@ -112,6 +128,5 @@ int main()
 	// Fix the file header to contain the proper RIFF chunk size, which is (file size - 8) bytes
 	f.seekp(0 + 4);
 	write_word(f, file_length - 8, 4);
-	_getwch();
 	return 0;
 }

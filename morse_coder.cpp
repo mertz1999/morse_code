@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-int main1() {
+int main(int argc, const char* argv[]) {
 	fstream text;
 	//define morse codes standard
 	map<string, string> coder;
@@ -55,34 +55,52 @@ int main1() {
 		{ " ","   " },
 	};
 
-	//read text from text.txt file
+	//get filename from shell to read text from
+	string infilename;
+	if(argc > 1)
+		infilename = argv[1];
+	else
+		infilename = "text.txt";
+
+	//get filename from shell to write code to
+	string outfilename;
+	if(argc > 2)
+		outfilename = argv[2];
+	else
+		outfilename = "code.txt";
+
+
+	//read text from input file
 	string stext;
-	text.open("text.txt");
+	text.open(infilename);
+	//check if file openes successfully
+	if(!text)
+		return -1;
 	getline(text, stext);
 	text.close();
 	cout << stext << endl;
 
 	// convert string to upper case
-	std::for_each(stext.begin(), stext.end(), [](char & c) {
-		c = ::toupper(c);
-	});
+	for(auto & c: stext)
+		c = toupper(c);
+
 	cout << stext << endl;
 
 	//coder
 	string coded = "";
 	string temp;
-	for (int i = 0; i < stext.size();i++) {
-		temp = stext[i];
+	for (auto & k : stext) {
+		temp = k;
 		coded += coder.find(temp)->second;
 		coded += " ";
 	}
 
-	cout << coded;
+	cout << coded << endl;
+	
 	//write coded to a file 
-	text.open("code.txt");
+	text.open(outfilename, ios::out);
 	text << coded;
 	text.close();
 	
-	_getwch();
 	return 0;
 }
