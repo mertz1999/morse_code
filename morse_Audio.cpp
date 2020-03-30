@@ -57,76 +57,70 @@ int main(int argc, const char* argv[])
 	code.open(infilename, ios::in);
 
 	//check if file opens successfully
-	if(!code)
-		return -1;
+    if (code != NULL) {
 
-	getline(code,scode);
-	code.close();
-	for (int j = 0; j < scode.size(); j++) {
-		if (scode[j] == '-') {
-			double seconds = 0.3;      // time
+        getline(code, scode);
+        code.close();
+        for (int j = 0; j < scode.size(); j++) {
+            if (scode[j] == '-') {
+                double seconds = 0.3;      // time
 
-			int N = hz * seconds;  // total number of samples
-			for (int n = 0; n < N; n++)
-			{
-				double amplitude = (double)n / N * max_amplitude;
-				double value = sin((two_pi * n * frequency) / hz);
-				write_word(f, (int)(amplitude  * value), 2);
-				write_word(f, (int)((max_amplitude - amplitude) * value), 2);
-			}
-			
-		}
-		else if(scode[j] == '.') {
-			cout << "YES";
-			double seconds = 0.1 ;      // time
+                int N = hz * seconds;  // total number of samples
+                for (int n = 0; n < N; n++) {
+                    double amplitude = (double) n / N * max_amplitude;
+                    double value = sin((two_pi * n * frequency) / hz);
+                    write_word(f, (int) (amplitude * value), 2);
+                    write_word(f, (int) ((max_amplitude - amplitude) * value), 2);
+                }
 
-			int N = hz * seconds;  // total number of samples
-			for (int n = 0; n < N; n++)
-			{
-				double amplitude = (double)n / N * max_amplitude;
-				double value = sin((two_pi * n * frequency) / hz);
-				write_word(f, (int)(amplitude  * value), 2);
-				write_word(f, (int)((max_amplitude - amplitude) * value), 2);
-			}
-		}
-		else{
-			double seconds = 0.3;      // time
+            } else if (scode[j] == '.') {
+                cout << "YES";
+                double seconds = 0.1;      // time
 
-			int N = hz * seconds;  // total number of samples
-			for (int n = 0; n < N; n++)
-			{
-				double amplitude = (double)n / N * max_amplitude;
-				double value = 0;
-				write_word(f, (int)(amplitude  * value), 2);
-				write_word(f, (int)((max_amplitude - amplitude) * value), 2);
-			}
-		}
-		double seconds = 0.1;      // time
+                int N = hz * seconds;  // total number of samples
+                for (int n = 0; n < N; n++) {
+                    double amplitude = (double) n / N * max_amplitude;
+                    double value = sin((two_pi * n * frequency) / hz);
+                    write_word(f, (int) (amplitude * value), 2);
+                    write_word(f, (int) ((max_amplitude - amplitude) * value), 2);
+                }
+            } else {
+                double seconds = 0.3;      // time
 
-		int N = hz * seconds;  // total number of samples
-		for (int n = 0; n < N; n++)
-		{
-			double amplitude = (double)n / N * max_amplitude;
-			double value = 0;
-			write_word(f, (int)(amplitude  * value), 2);
-			write_word(f, (int)((max_amplitude - amplitude) * value), 2);
-		}
-		cout << scode[j];
-	}
+                int N = hz * seconds;  // total number of samples
+                for (int n = 0; n < N; n++) {
+                    double amplitude = (double) n / N * max_amplitude;
+                    double value = 0;
+                    write_word(f, (int) (amplitude * value), 2);
+                    write_word(f, (int) ((max_amplitude - amplitude) * value), 2);
+                }
+            }
+            double seconds = 0.1;      // time
+
+            int N = hz * seconds;  // total number of samples
+            for (int n = 0; n < N; n++) {
+                double amplitude = (double) n / N * max_amplitude;
+                double value = 0;
+                write_word(f, (int) (amplitude * value), 2);
+                write_word(f, (int) ((max_amplitude - amplitude) * value), 2);
+            }
+            cout << scode[j];
+        }
 
 
-	
 
 
-	// (We'll need the final file size to fix the chunk sizes above)
-	size_t file_length = f.tellp();
 
-	// Fix the data chunk header to contain the data size
-	f.seekp(data_chunk_pos + 4);
-	write_word(f, file_length - data_chunk_pos + 8);
+        // (We'll need the final file size to fix the chunk sizes above)
+        size_t file_length = f.tellp();
 
-	// Fix the file header to contain the proper RIFF chunk size, which is (file size - 8) bytes
-	f.seekp(0 + 4);
-	write_word(f, file_length - 8, 4);
-	return 0;
+        // Fix the data chunk header to contain the data size
+        f.seekp(data_chunk_pos + 4);
+        write_word(f, file_length - data_chunk_pos + 8);
+
+        // Fix the file header to contain the proper RIFF chunk size, which is (file size - 8) bytes
+        f.seekp(0 + 4);
+        write_word(f, file_length - 8, 4);
+        return 0;
+    } else return -1;
 }

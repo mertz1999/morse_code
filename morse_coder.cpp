@@ -73,34 +73,34 @@ int main(int argc, const char* argv[]) {
 	//read text from input file
 	string stext;
 	text.open(infilename);
-	//check if file openes successfully
-	if(!text)
-		return -1;
-	getline(text, stext);
-	text.close();
-	cout << stext << endl;
+	//check if file opens successfully
+    if (text != NULL) {
+        getline(text, stext);
+        text.close();
+        cout << stext << endl;
 
-	// convert string to upper case
-	for(auto & c: stext)
-		c = toupper(c);
+        // convert string to upper case
+        for (auto &c: stext)
+            c = toupper(c);
 
-	cout << stext << endl;
+        cout << stext << endl;
 
-	//coder
-	string coded = "";
-	string temp;
-	for (auto & k : stext) {
-		temp = k;
-		coded += coder.find(temp)->second;
-		coded += " ";
-	}
+        //coder
+        string coded = "";
+        string temp;
+        for (auto &k : stext) {
+            temp = k;
+            coded += coder.find(temp)->second;
+            coded += " ";
+        }
 
-	cout << coded << endl;
-	
-	//write coded to a file 
-	text.open(outfilename, ios::out);
-	text << coded;
-	text.close();
-	
-	return 0;
+        cout << coded << endl;
+
+        //write coded to a file
+        text.open(outfilename, ios::out);
+        text << coded;
+        text.close();
+
+        return 0;
+    } else return -1;
 }
